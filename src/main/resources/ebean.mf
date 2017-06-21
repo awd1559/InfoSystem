@@ -1,4 +1,0 @@
-entity-packages: com.bread.info.models
-transactional-packages: com.bread.info
-querybean-packages: com.bread.info
-
