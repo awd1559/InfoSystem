@@ -8,7 +8,7 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name="IS_StudyCategory")
+@Table(name="IS_Study_Category")
 public class StudyCategory {
 
     @Id
@@ -26,6 +26,7 @@ public class StudyCategory {
     }
 
 
+    public StudyCategory() { this.subject = ""; }
     public StudyCategory(String subject) {
         this.subject = subject;
     }

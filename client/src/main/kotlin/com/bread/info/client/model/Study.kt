@@ -5,18 +5,37 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 import java.util.*
+import javax.json.JsonObject
 
-class Study(category: StudyCategory, title: String) {
-    val id = UUID.randomUUID()
+class Study : JsonModel {
+    var id by property<UUID>()
+    fun idProperty() = getProperty(Study::id)
 
-    val titleProperty = SimpleStringProperty(title)
-    var title by titleProperty
+    var title by property<String>()
+    fun titleProperty() = getProperty(Study::title)
 
-    val descriptionProperty = SimpleStringProperty()
-    var description by descriptionProperty
+    var description by property<String>()
+    fun descriptionProperty() = getProperty(Study::description)
 
-    val categoryProperty = SimpleObjectProperty<StudyCategory>(category)
-    var category by categoryProperty
+    var categoryid by property<UUID>()
+    fun categoryidProperty() = getProperty(Study::categoryid)
+
+    override fun updateModel(json: JsonObject) {
+        with(json) {
+            id = uuid("id")
+            title = string("title")
+            description = string("description")
+            categoryid = uuid("category_id")
+        }
+    }
+
+    override fun toJSON(json: JsonBuilder) {
+        with(json) {
+            add("id", id)
+            add("title", title)
+            add("description", description)
+        }
+    }
 
     override fun toString(): String {
         return this.title
@@ -26,5 +45,5 @@ class Study(category: StudyCategory, title: String) {
 class StudyModel : ItemViewModel<Study>() {
     val title = bind { SimpleStringProperty(item?.title) }
     val description = bind { SimpleStringProperty(item?.description) }
-    val category = bind { SimpleObjectProperty<StudyCategory>(item?.category) }
+//    val categoryid = bind { <StudyCategory>(item?.category) }
 }
