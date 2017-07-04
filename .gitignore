@@ -1,6 +1,2 @@
-client/target/
-client/build/
-client/dist/
-client/node_modules/
 server/target/
 .idea/
