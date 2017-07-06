@@ -1,2 +1,10 @@
 server/target/
 .idea/
+
+client/yarn.lock
+
+client/nedb.db
+
+client/yarn.lock
+
+client/yarn.lock

@@ -1,43 +1,8 @@
 <template>
 	<div class="pane-group">
 		<div class="pane pane-sm sidebar">
-          <div class="window">
-          	<header class="toolbar toolbar-header">
-              <input class="form-control" type="text" placeholder="Search for list">
-      	    </header>
-            
-            <div class="window-content">
-              <div class="window">
-                <h5 class="nav-group-title">列表</h5>
-                <div class="window-content">
-                  <ul class="list-group">
-                    <li class="list-group-item" v-for="n in 20" v-bind:class="{ active: n==selectedListItem }" @click="item_click(n)">
-                    <img class="img-circle media-object pull-left" src="static/img/avatar4.jpg" width="32" height="32">
-                    <div class="media-body">
-                      <strong>List item title</strong>
-                      <p>Lorem ipsum dolor sit amet.</p>
-                    </div>
-                   </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div><h6></h6></div>
-
-            <footer class="toolbar toolbar-footer">
-              <div class="tab-group">
-                <div class="tab-item">
-                 <span class="icon icon-plus"></span>
-                   Add
-                </div>
-                <div class="tab-item">
-                 <span class="icon icon-minus"></span>
-                   Del
-                </div>
-              </div>
-            </footer>
-          </div>
-        </div>
+      <study-category-list :items="categorys"></study-category-list>
+    </div>
 
         <div class="pane">
           <div class="window">
@@ -66,22 +31,26 @@
 </template>
 
 <script>
+  import StudyCategoryList from './StudyCategoryList'
   import StudyList from './StudyList'
 
   export default {
     name: 'study-tab-page',
-    components: { StudyList },
+    components: { StudyCategoryList, StudyList },
     data () {
       return {
-        selectedListItem: 0,
+        categorys: [],
         studys: [
           'good', 'linux', 'wang'
         ]
       }
     },
+    created () {
+      this.refreshui()
+    },
     methods: {
-      item_click (n) {
-        this.selectedListItem = n
+      refreshui () {
+        // this.categorys =
       },
       item_menu (n) {
         alert(n)
