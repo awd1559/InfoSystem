@@ -1,6 +1,6 @@
 <template>
   <div class="window-content">
-    <study-tab-page v-if="tabs[0].active"></study-tab-page>
+    <study-tab-page v-if="tabs[0].active" ref="studytab"></study-tab-page>
     <note-tab-page v-if="tabs[1].active"></note-tab-page>
     <coding-tab-page v-if="tabs[2].active"></coding-tab-page>
     <company-tab-page v-if="tabs[3].active"></company-tab-page>
@@ -17,10 +17,9 @@
     name: 'home-page',
     props: ['tabs'],
     components: { StudyTabPage, NoteTabPage, CodingTabPage, CompanyTabPage },
-    methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      }
+    mounted () {
+      // console.log(this)
+      // this.$refs.studytab.$refs.catelist.selectedListItem = 1
     }
   }
 </script>

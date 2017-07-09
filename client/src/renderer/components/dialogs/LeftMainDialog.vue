@@ -1,5 +1,5 @@
 <template>
-  <vodal :show="show" animation="slideDown" @hide="hide">
+  <vodal :show="show" animation="slideDown" @hide="cancel">
     <div class="window">
       <header class="toolbar toolbar-header">
       </header>
@@ -14,7 +14,7 @@
       </div>
       <footer class="toolbar toolbar-footer">
         <div class="toolbar-actions">
-          <button class="btn btn-default" @click="hide">
+          <button class="btn btn-default" @click="cancel">
             Cancel
           </button>
           <button class="btn btn-primary pull-right" @click="hide">
@@ -39,9 +39,10 @@
     },
     methods: {
       hide () {
-        // this.show = false
-        // this.$emit('hide', this.password)
         this.$emit('update:show', false)
+      },
+      cancel () {
+        this.$emit('cancel')
       }
     }
   }

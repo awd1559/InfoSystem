@@ -44,16 +44,14 @@
       <footer class="toolbar toolbar-footer">
         <span class="">@Personal Info System</span>
       </footer>
-      <my-dialog :message="message" :show="show" @hide="hidedialog"></my-dialog>
+      <my-dialog :message="message" :show="show" @update:show="hidedialog" ref="dialog">
+        <input slot="main" class="form-control" placeholder="Password" v-model="password">
+      </my-dialog>
     </div>
   </div>
 </template>
 
 <script>
-  // import Vue from 'vue'
-  // import 'vue-beauty/package/style/vue-beauty.min.css'
-  // import vueBeauty from 'vue-beauty'
-  // Vue.use(vueBeauty)
   import MyDialog from './components/Dialog'
 
   export default {
@@ -68,7 +66,8 @@
           { icon: 'icon-sweden', text: '公司', name: 'company', active: false }
         ],
         message: '',
-        show: false
+        show: false,
+        password: ''
       }
     },
     methods: {
@@ -80,9 +79,13 @@
         this.message = 'tst'
         this.show = true
       },
-      hidedialog (password) {
-        this.show = false
-        alert(password)
+      hidedialog (value) {
+        this.show = value
+        // not working on nextick
+        this.$nextTick(() => { alert(this.password) })
+      },
+      open (link) {
+        this.$electron.shell.openExternal(link)
       }
     }
   }
