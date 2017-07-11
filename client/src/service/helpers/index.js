@@ -55,6 +55,26 @@ class study {
       callback(error, [])
     })
   }
+
+  static oneById (id, callback) {
+    axios.get(config.getBaseUrl() + '/study/one', {params: {id: id}})
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
+
+  static update (item, callback) {
+    axios.post(config.getBaseUrl() + '/study/update', JSON.stringify(item))
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
 }
 
 export default {

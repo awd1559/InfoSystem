@@ -14,8 +14,6 @@ public class StudyCategory {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-//    @Column(columnDefinition = "BINARY(20)")
-//    @org.hibernate.annotations.Type(type="org.hibernate.type.UUIDBinaryType")
     private String id;
 
     public String getId() {

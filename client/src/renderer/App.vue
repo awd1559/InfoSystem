@@ -10,13 +10,13 @@
             <button class="btn btn-default" >
               <span class="icon icon-folder"></span>
             </button>
+            <button class="btn btn-default" @click="goback">
+              <span class="icon icon-left-bold"></span>
+            </button>
             <button class="btn btn-default">
-              <span class="icon icon-cloud"></span>
+              <span class="icon icon-right-bold"></span>
             </button>
             <button class="btn btn-default" @click="showdialog">
-              <span class="icon icon-popup"></span>
-            </button>
-            <button class="btn btn-default">
               <span class="icon icon-shuffle"></span>
             </button>
           </div>
@@ -27,7 +27,7 @@
           </button>
 
           <button class="btn btn-default btn-dropdown pull-right">
-            <span class="icon icon-megaphone"></span>
+            <span class="icon icon-cog"></span>
           </button>
         </div>
       </header>
@@ -53,6 +53,11 @@
 
 <script>
   import MyDialog from './components/Dialog'
+  import router from './router'
+  import Vue from 'vue'
+  import mavonEditor from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
+  Vue.use(mavonEditor)
 
   export default {
     name: 'client-vue',
@@ -83,6 +88,9 @@
         this.show = value
         // not working on nextick
         this.$nextTick(() => { alert(this.password) })
+      },
+      goback () {
+        router.go(-1)
       },
       open (link) {
         this.$electron.shell.openExternal(link)

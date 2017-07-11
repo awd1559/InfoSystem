@@ -13,8 +13,6 @@ public class Study{
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-//    @Column(columnDefinition = "BINARY(20)")
-//    @org.hibernate.annotations.Type(type="org.hibernate.type.UUIDBinaryType")
     private String id;
 
     public String getId() {
@@ -27,7 +25,6 @@ public class Study{
 
 
     @ManyToOne
-//    @org.hibernate.annotations.Type(type="org.hibernate.type.UUIDBinaryType")
     private StudyCategory category;
 
     @NotNull

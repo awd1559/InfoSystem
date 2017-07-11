@@ -50,7 +50,6 @@ public class StudyController {
     @GetMapping(path = "/studycategory/delete")
     public @ResponseBody
     Result deleteStudyCategory(String id) {
-        logger.error("delete : " + id);
         studyCategoryRepository.delete(id);
         return new Result(200, "ok");
     }
@@ -67,13 +66,19 @@ public class StudyController {
     Study getStudyById(String id) { return studyRepository.findOne(id); }
 
     @PostMapping(path = "/study/add")
-    public void addStudy(@RequestBody Study study) { studyRepository.save(study); }
+    public @ResponseBody
+    Study addStudy(@RequestBody Study study) { return studyRepository.save(study); }
 
     @PostMapping(path = "/study/update")
-    public void updateStudy(@RequestBody Study study) { studyRepository.save(study); }
+    public @ResponseBody
+    Study updateStudy(@RequestBody Study study) { return studyRepository.save(study); }
 
     @PostMapping(path = "/study/delete")
-    public void deleteStudy(@RequestBody String id) { studyRepository.delete(id); }
+    public @ResponseBody
+    Result deleteStudy(@RequestBody String id) {
+        studyRepository.delete(id);
+        return new Result(200, "ok");
+    }
 
 
 }
