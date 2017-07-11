@@ -48,7 +48,7 @@
     },
     methods: {
       item_click (item) {
-        router.push({name: 'study', params: { id: item._id }})
+        router.push({name: 'study', params: { id: item.id }})
       },
       resetUI (listid) {
         helper.study.allByCateId(listid, (err, studys) => {

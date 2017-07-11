@@ -1,5 +1,5 @@
 <template>
-  <vodal :show="show" animation="slideDown" @hide="cancel" width="200" height="120">
+  <vodal :show="show" animation="slideDown" @hide="cancel" :width="200" :height="120">
     <div class="window">
       <header class="toolbar toolbar-header">
       </header>

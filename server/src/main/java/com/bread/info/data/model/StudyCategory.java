@@ -12,19 +12,19 @@ import java.util.UUID;
 public class StudyCategory {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(20)")
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+//    @Column(columnDefinition = "BINARY(20)")
+//    @org.hibernate.annotations.Type(type="org.hibernate.type.UUIDBinaryType")
+    private String id;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
-
 
     public StudyCategory() { this.subject = ""; }
     public StudyCategory(String subject) {
