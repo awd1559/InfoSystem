@@ -46,8 +46,8 @@ class studycategory {
 }
 
 class study {
-  static allByCateId (categoryId, callback) {
-    axios.get(config.getBaseUrl() + '/study/list', {params: {categoryId: categoryId}})
+  static allByCateId (categoryId, pageIndex, callback) {
+    axios.get(config.getBaseUrl() + '/study/list', {params: {categoryId: categoryId, page: pageIndex}})
     .then(function (response) {
       callback(null, response.data)
     })

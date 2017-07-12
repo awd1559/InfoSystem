@@ -50,6 +50,7 @@
       return {
         editor: {
           editable: false,
+          defaultopen: 'preview',
           codehilight: true,
           twocolumn: false,
           toolbarsFlag: false,

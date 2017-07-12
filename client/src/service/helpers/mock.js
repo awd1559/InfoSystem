@@ -18,16 +18,17 @@ class studycategory {
 }
 
 class study {
-  static allByCateId (categoryId, callback) {
+  static allByCateId (categoryId, pageIndex, callback) {
     var err = null
     var data = []
     switch (categoryId) {
       case '1':
-        data = [
-          {id: '1', title: 'javafx_1', description: 'starter'},
-          {id: '2', title: 'javafx_2', description: 'begin'},
-          {id: '3', title: 'javafx_3', description: 'advanced'}
-        ]
+        for (var n = 0; n < 200; n++) {
+          var id = n.toString()
+          var title = 'javafx_' + n.toString()
+          var item = {id: id, title: title, description: 'advanced'}
+          data.push(item)
+        }
         break
       case '2':
         data = [
@@ -44,7 +45,17 @@ class study {
         ]
         break
     }
-    callback(err, data)
+    var left = data.length % 10
+    var total = 0
+    if (left !== 0) {
+      total = (data.length - left) / 10 + 1
+    } else {
+      total = data.length / 10
+    }
+    var start = (pageIndex - 1) * 10
+    var end = pageIndex * 10 - 1
+    var response = {items: data.slice(start, end), pageTotal: total}
+    callback(err, response)
   }
 }
 

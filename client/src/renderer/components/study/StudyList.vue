@@ -28,21 +28,25 @@
       </ul>
     </div>
 
+    <pager @clickitem="getDataAtPage" ref="pager"></pager>
   </div>
 </template>
 
 <script>
   import router from '../../router'
   import helper from '../../../service/helpers'
+  import Pager from '../Pagination'
 
   export default {
     name: 'study-list',
     data () {
       return {
         items: [],
+        parentId: '',
         searchKey: ''
       }
     },
+    components: { Pager },
     created () {
       this.$parent.$on('CATEGORYLISTITEMCHANGED', this.resetUI)
     },
@@ -50,10 +54,15 @@
       item_click (item) {
         router.push({name: 'study', params: { id: item.id }})
       },
-      resetUI (listid) {
-        helper.study.allByCateId(listid, (err, studys) => {
+      resetUI (parentId) {
+        this.parentId = parentId
+        this.getDataAtPage(1)
+      },
+      getDataAtPage (pageIndex) {
+        helper.study.allByCateId(this.parentId, pageIndex, (err, response) => {
           if (err) { console.log(err) }
-          this.items = studys
+          this.items = response.items
+          this.$refs.pager.setup(response.pageTotal)
         })
       }
     }
