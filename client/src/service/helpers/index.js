@@ -153,9 +153,87 @@ class note {
   }
 }
 
+class codingcategory {
+  static all (callback) {
+    axios.get(config.getBaseUrl() + '/codingcategory/list')
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, [])
+    })
+  }
+
+  static add (item, callback) {
+    axios.post(config.getBaseUrl() + '/codingcategory/add', JSON.stringify(item))
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
+
+  static update (item, callback) {
+    axios.post(config.getBaseUrl() + '/codingcategory/update', JSON.stringify(item))
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
+
+  static remove (item, callback) {
+    axios.get(config.getBaseUrl() + '/codingcategory/delete', {params: {id: item.id}})
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
+}
+
+class coding {
+  static allByCateId (categoryId, pageIndex, callback) {
+    axios.get(config.getBaseUrl() + '/coding/list', {params: {categoryId: categoryId, page: pageIndex}})
+    .then(function (response) {
+      console.log(response.data)
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      console.log(error)
+      callback(error, [])
+    })
+  }
+
+  static oneById (id, callback) {
+    axios.get(config.getBaseUrl() + '/coding/one', {params: {id: id}})
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
+
+  static update (item, callback) {
+    axios.post(config.getBaseUrl() + '/coding/update', JSON.stringify(item))
+    .then(function (response) {
+      callback(null, response.data)
+    })
+    .catch(function (error) {
+      callback(error, {})
+    })
+  }
+}
+
 export default {
   studycategory,
   study,
   notecategory,
-  note
+  note,
+  codingcategory,
+  coding
 }

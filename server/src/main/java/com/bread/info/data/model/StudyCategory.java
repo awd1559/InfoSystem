@@ -47,6 +47,7 @@ public class StudyCategory {
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getWhen_created() { return this.when_created; }
     public void setWhen_created(Date when_created) {
         this.when_created = when_created;
     }

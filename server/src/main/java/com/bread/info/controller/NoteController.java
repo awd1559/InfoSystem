@@ -45,20 +45,18 @@ public class NoteController {
     @PostMapping(path="/notecategory/add")
     public @ResponseBody
     NoteCategory addNoteCategory(@RequestBody NoteCategory category) {
-        logger.error(category.getId());
-        logger.error(category.getSubject());
         return noteCategoryRepository.save(category);
     }
 
     @PostMapping(path = "/notecategory/update")
     public @ResponseBody
-    NoteCategory updateStudyCategory(@RequestBody NoteCategory category) {
+    NoteCategory updateNoteCategory(@RequestBody NoteCategory category) {
         return noteCategoryRepository.save(category);
     }
 
     @GetMapping(path = "/notecategory/delete")
     public @ResponseBody
-    Result deleteStudyCategory(String id) {
+    Result deleteNoteCategory(String id) {
         noteCategoryRepository.delete(id);
         return new Result(200, "ok");
     }
