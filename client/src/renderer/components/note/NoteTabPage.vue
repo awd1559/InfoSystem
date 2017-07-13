@@ -1,55 +1,44 @@
 <template>
-  <div class="pane">
-    <button class="btn btn-default" @click="insertdb">insert</button>
-    <button class="btn btn-primary" @click="finddb">find</button>
+	<div class="pane-group">
+		<div class="pane pane-sm sidebar">
+      <note-category-list ref='catelist'></note-category-list>
+    </div>
 
-    <ul class="list-group">
-      <li class="list-group-header">
-        <input class="form-control" type="text" placeholder="Search for someone">
-      </li>
-      <li class="list-group-item" v-for="item in items">
-        <img class="img-circle media-object pull-left" src="/static/img/avatar.jpg" width="32" height="32">
-        <div class="media-body">
-          <strong>{{ item.hello }}</strong>
-          <p>{{ item.fruits }}</p><span>{{ item._id }}</span>
-        </div>
-      </li>
-</ul>
-  </div>
+    <div class="pane">
+      <note-list ref='notelist'></note-list>
+    </div>
+    </div>
 </template>
 
 <script>
-  // import router from '../../router'
-  import nedb from '../../../service/nedb'
+  import NoteCategoryList from './NoteCategoryList'
+  import NoteList from './NoteList'
 
   export default {
-    name: 'study-page',
-    data () {
-      return {
-        items: []
-      }
-    },
-    created () {
-      console.log('created')
-      this.finddb()
-    },
-    methods: {
-      insertdb () {
-        nedb.insert((err, newDoc) => {
-          if (err) { console.log(err) }
-          this.finddb()
-        })
-      },
-      finddb () {
-        nedb.find((err, doc) => {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log('find no error')
-          }
-          this.items = doc
-        })
-      }
-    }
+    name: 'note-tab-page',
+    components: { NoteCategoryList, NoteList }
   }
 </script>
+
+<style>
+  .center {
+  	text-align: center;
+  	width: 100%;
+  }
+  .search {
+    min-height: 35px;
+    box-shadow: inset 0 1px 0 #ffffff;
+    background-color: #cccccc;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 25px;
+  }
+  .search:before, .search:after {
+    display: table;
+    content: " ";
+  }
+  .search:after {
+    clear: both;
+  }
+</style>

@@ -17,6 +17,11 @@ export default new Router({
     },
 
     {
+      path: '/note/:id',
+      name: 'note',
+      component: require('@/components/note/NotePage')
+    },
+    {
       path: '*',
       redirect: '/'
     }

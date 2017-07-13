@@ -45,7 +45,7 @@
   import helper from '../../../service/helpers'
 
   export default {
-    name: 'study-page',
+    name: 'note-page',
     data () {
       return {
         editor: {
@@ -94,9 +94,9 @@
     },
     methods: {
       resetUI () {
-        helper.study.oneById(this.$route.params.id, (err, study) => {
+        helper.note.oneById(this.$route.params.id, (err, note) => {
           if (err) { console.log(err) }
-          this.item = study
+          this.item = note
         })
       },
       switchEditing () {
@@ -111,7 +111,7 @@
       },
       save () {
         if (this.dirty) {
-          helper.study.update(this.item, (err, data) => {
+          helper.note.update(this.item, (err, data) => {
             if (err) { console.log(err) }
             console.log(data)
             this.dirty = false
