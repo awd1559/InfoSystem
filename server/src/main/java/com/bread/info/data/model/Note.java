@@ -1,10 +1,13 @@
 package com.bread.info.data.model;
 
 
+import com.bread.info.util.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -55,6 +58,22 @@ public class Note {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    private Date when_created;
+    private Date when_updated;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public void setWhen_created(Date when_created) {
+        this.when_created = when_created;
+    }
+
+    public Date getWhen_updated() {
+        return when_updated;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public void setWhen_updated(Date when_updated) {
+        this.when_updated = when_updated;
     }
 
 }

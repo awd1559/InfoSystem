@@ -37,7 +37,9 @@ public class StudyController {
 
     @GetMapping(path = "/studycategory/one")
     public @ResponseBody
-    StudyCategory getStudyCategoryById(String id) { return studyCategoryRepository.findOne(id); }
+    StudyCategory getStudyCategoryById(String id) {
+        return studyCategoryRepository.findOne(id);
+    }
 
     @PostMapping(path="/studycategory/add")
     public @ResponseBody
@@ -49,7 +51,9 @@ public class StudyController {
 
     @PostMapping(path = "/studycategory/update")
     public @ResponseBody
-    StudyCategory updateStudyCategory(@RequestBody StudyCategory category) { return studyCategoryRepository.save(category); }
+    StudyCategory updateStudyCategory(@RequestBody StudyCategory category) {
+        return studyCategoryRepository.save(category);
+    }
 
     @GetMapping(path = "/studycategory/delete")
     public @ResponseBody
@@ -61,6 +65,12 @@ public class StudyController {
 
 
     //Stuty
+    @GetMapping(path = "/study/all")
+    public @ResponseBody
+    Iterable<Study> getStudyAll() {
+        return studyRepository.findAll();
+    }
+
     @GetMapping(path = "/study/list")
     public @ResponseBody
     ResultPagable<Study> getStudyListById(String categoryId, int page) {
@@ -71,7 +81,8 @@ public class StudyController {
 
     @GetMapping(path = "/study/one")
     public @ResponseBody
-    Study getStudyById(String id) { return studyRepository.findOne(id);
+    Study getStudyById(String id) {
+        return studyRepository.findOne(id);
     }
 
     @PostMapping(path = "/study/add")

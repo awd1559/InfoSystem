@@ -1,9 +1,13 @@
 package com.bread.info.data.model;
 
+import com.bread.info.util.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.security.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +33,10 @@ public class Study{
 
     @NotNull
     private String title;
-    private String description;
+    private String content;
+
+    private Date when_created;
+    private Date when_updated;
 
     public StudyCategory getCategory() {
         return category;
@@ -47,12 +54,29 @@ public class Study{
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
+    public Date getWhen_created() {
+        return when_created;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public void setWhen_created(Date when_created) {
+        this.when_created = when_created;
+    }
+
+    public Date getWhen_updated() {
+        return when_updated;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public void setWhen_updated(Date when_updated) {
+        this.when_updated = when_updated;
+    }
 }
