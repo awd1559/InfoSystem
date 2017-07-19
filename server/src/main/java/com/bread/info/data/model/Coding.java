@@ -16,27 +16,23 @@ import java.util.UUID;
 public class Coding {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(20)")
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    private String id;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    @NotNull
-    private String category;
+    private String name;
 
-    //子分类
-    @NotNull
-    private String subcategory;
+    @ManyToOne
+    private CodingCategory category;
 
-    //
     @NotNull
     private String tag;
 
@@ -70,22 +66,18 @@ public class Coding {
     //最后更新时间
     private Long gitLastUpdate;
 
+    public void setName(String name) { this.name = name; }
 
-    public String getCategory() {
+    public String getName() { return this.name; }
+
+    public CodingCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CodingCategory category) {
         this.category = category;
     }
 
-    public String getSubcategory() {
-        return subcategory;
-    }
-
-    public void setSubcategory(String subcategory) {
-        this.subcategory = subcategory;
-    }
 
     public String getTag() {
         return tag;

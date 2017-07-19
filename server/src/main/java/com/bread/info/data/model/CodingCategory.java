@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+// CREATE UNIQUE INDEX IDIndex ON is_coding_category(subject, parent_id);
 @Entity
 @Table(name="is_coding_category")
 public class CodingCategory {
@@ -36,6 +37,7 @@ public class CodingCategory {
     }
 
     @NotNull
+    @Column(unique=true)
     private String subject;
     public String getSubject() {
         return subject;

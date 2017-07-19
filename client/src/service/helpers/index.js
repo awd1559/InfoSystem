@@ -3,229 +3,130 @@ const axios = require('axios')
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
+function getdata(url, callback) {
+  axios.get(conig.getBaseUrl() + url)
+  .then(function (response) {
+    callback(null, response.data)
+  })
+  .catch(function (error) {
+    callback(error, [])
+  })
+}
+
+function getdata(url, params, callback) {
+  axios.get(conig.getBaseUrl() + url, params)
+  .then(function (response) {
+    callback(null, response.data)
+  })
+  .catch(function (error) {
+    callback(error, [])
+  })
+}
+
+function postdata(url, data, callback) {
+  axios.post(config.getBaseUrl() + url, JSON.stringify(data))
+  .then(function (response) {
+    callback(null, response.data)
+  })
+  .catch(function (error) {
+    callback(error, {})
+  })
+}
+
+
 class studycategory {
   static all (callback) {
-    axios.get(config.getBaseUrl() + '/studycategory/list')
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, [])
-    })
+    getdata('/studycategory/list', callback)
   }
 
   static add (item, callback) {
-    axios.post(config.getBaseUrl() + '/studycategory/add', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/studycategory/add', item, callback)
   }
 
   static update (item, callback) {
-    axios.post(config.getBaseUrl() + '/studycategory/update', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/studycategory/update', item, callback)
   }
 
   static remove (item, callback) {
-    axios.get(config.getBaseUrl() + '/studycategory/delete', {params: {id: item.id}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    getdata('/studycategory/delete', {params: {id: item.id}}, callback)
   }
 }
 
 class study {
   static allByCateId (categoryId, pageIndex, callback) {
-    axios.get(config.getBaseUrl() + '/study/list', {params: {categoryId: categoryId, page: pageIndex}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, [])
-    })
+    getdata('/study/list', {params: {categoryId: categoryId, page: pageIndex}}, callback)
   }
 
   static oneById (id, callback) {
-    axios.get(config.getBaseUrl() + '/study/one', {params: {id: id}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    getdata('/study/one', {params: {id: id}}, callback)
   }
 
   static update (item, callback) {
-    axios.post(config.getBaseUrl() + '/study/update', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/study/update', item, callback)
   }
 }
 
 class notecategory {
   static all (callback) {
-    axios.get(config.getBaseUrl() + '/notecategory/list')
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, [])
-    })
+    getdata('/notecategory/list', callback)
   }
 
   static add (item, callback) {
-    axios.post(config.getBaseUrl() + '/notecategory/add', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/notecategory/add', item, callback)
   }
 
   static update (item, callback) {
-    axios.post(config.getBaseUrl() + '/notecategory/update', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/notecategory/update', item, callback)
   }
 
   static remove (item, callback) {
-    axios.get(config.getBaseUrl() + '/notecategory/delete', {params: {id: item.id}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    getdata('/notecategory/delete', {params: {id: item.id}}, callback)
   }
 }
 
 class note {
   static allByCateId (categoryId, pageIndex, callback) {
-    axios.get(config.getBaseUrl() + '/note/list', {params: {categoryId: categoryId, page: pageIndex}})
-    .then(function (response) {
-      console.log(response.data)
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      console.log(error)
-      callback(error, [])
-    })
+    getdata('/note/list', {params: {categoryId: categoryId, page: pageIndex}}, callback)
   }
 
   static oneById (id, callback) {
-    axios.get(config.getBaseUrl() + '/note/one', {params: {id: id}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    getdata('/note/one', {params: {id: id}}, callback)
   }
 
   static update (item, callback) {
-    axios.post(config.getBaseUrl() + '/note/update', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/note/update', item, callback)
   }
 }
 
 class codingcategory {
   static all (callback) {
-    axios.get(config.getBaseUrl() + '/codingcategory/list')
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, [])
-    })
+    getdata('/codingcategory/list', callback)
   }
 
   static add (item, callback) {
-    axios.post(config.getBaseUrl() + '/codingcategory/add', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/codingcategory/add', item, callback)
   }
 
   static update (item, callback) {
-    axios.post(config.getBaseUrl() + '/codingcategory/update', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    postdata('/codingcategory/update', item, callback)
   }
 
   static remove (item, callback) {
-    axios.get(config.getBaseUrl() + '/codingcategory/delete', {params: {id: item.id}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    getdata('/codingcategory/delete', {params: {id: item.id}}, callback)
   }
 }
 
 class coding {
   static allByCateId (categoryId, pageIndex, callback) {
-    axios.get(config.getBaseUrl() + '/coding/list', {params: {categoryId: categoryId, page: pageIndex}})
-    .then(function (response) {
-      console.log(response.data)
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      console.log(error)
-      callback(error, [])
-    })
+    getdata('/coding/list', {params: {categoryId: categoryId, page: pageIndex}}, callback)
   }
 
   static oneById (id, callback) {
-    axios.get(config.getBaseUrl() + '/coding/one', {params: {id: id}})
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    getdata('/coding/one', {params: {id: id}})
   }
 
   static update (item, callback) {
-    axios.post(config.getBaseUrl() + '/coding/update', JSON.stringify(item))
-    .then(function (response) {
-      callback(null, response.data)
-    })
-    .catch(function (error) {
-      callback(error, {})
-    })
+    axios.post(config.getBaseUrl() + '/coding/update', item, callback)
   }
 }
 
