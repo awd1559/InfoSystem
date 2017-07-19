@@ -1,7 +1,7 @@
 <template>
   <div>
     <group>
-      <cell v-for="item in items" :key="item.id" :title="item.subject" is-link link="/coding"></cell>
+      <cell v-for="item in items" :key="item.id" :title="item.subject" :is-link=true :link="{name: 'studylist', params: {id: item.id}}"></cell>
     </group>
   </div>
 </template>

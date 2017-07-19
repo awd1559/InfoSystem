@@ -6,10 +6,11 @@ import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync'
 
 import App from './App'
-import Study from './components/study'
-import Note from './components/note'
-import Coding from './components/coding'
-import Company from './components/company'
+import StudyTab from './components/study'
+import StudyList from './components/study/list'
+import NoteTab from './components/note'
+import CodingTab from './components/coding'
+import CompanyTab from './components/company'
 import './mock/index.js'
 import Vuex from 'vuex'
 
@@ -22,11 +23,12 @@ import vuexI18n from 'vuex-i18n'
 require('es6-promise').polyfill()
 
 const routes = [
-  {path: '/', component: Study},
-  {path: '/study', component: Study},
-  {path: '/note', component: Note},
-  {path: '/coding', component: Coding},
-  {path: '/company', component: Company}
+  {path: '/', component: StudyTab},
+  {path: '/study', component: StudyTab},
+  {path: '/studycategory/:id', name: 'studylist', component: StudyList},
+  {path: '/note', component: NoteTab},
+  {path: '/coding', component: CodingTab},
+  {path: '/company', component: CompanyTab}
 ]
 
 const router = new VueRouter({

@@ -11,8 +11,13 @@ class studycategory {
 }
 
 class study {
-  static allByCateId (categoryId, pageIndex) {
+  static allByCateId (url) {
     var data = []
+    // /study/list?categoryId=1&page=1
+    var params = url.url.split('?')[1]
+    var categoryId = params.split('&')[0].split('=')[1]
+    var pageIndex = params.split('&')[1].split('=')[1]
+
     switch (categoryId) {
       case '1':
         for (var n = 0; n < 200; n++) {
