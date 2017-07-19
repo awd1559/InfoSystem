@@ -3,10 +3,11 @@ package com.bread.info.client.controller
 import com.bread.info.client.model.Coding
 import com.bread.info.client.model.Study
 import com.bread.info.client.model.StudyCategory
+import javafx.collections.ObservableList
 import tornadofx.*
 import java.util.*
 
-class Mock : Controller() {
+class MockController : Controller() {
 
     val codings = SortedFilteredList<Coding>()
     fun addCoding(coding: Coding) {
@@ -19,6 +20,9 @@ class Mock : Controller() {
 
 
     val studycategories = SortedFilteredList<StudyCategory>()
+    fun getCategoryList() : SortedFilteredList<StudyCategory> {
+        return studycategories
+    }
     fun addStudyCategory(studyCategory: StudyCategory) {
         studycategories.add(studyCategory)
     }
@@ -27,8 +31,12 @@ class Mock : Controller() {
     }
 
     val studies = SortedFilteredList<Study>()
-    fun getStudyList(category: StudyCategory) {
-        studies.predicate = { it.categoryid == category.id }
+    fun getStudyList(category: StudyCategory?) : SortedFilteredList<Study> {
+        if (category != null) {
+            studies.predicate = { it.categoryid == category.id }
+            return studies
+        }
+        return SortedFilteredList<Study>()
     }
     fun addStudy(study: Study) {
         studies.add(study)

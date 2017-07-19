@@ -1,6 +1,6 @@
 package com.bread.info.client.view.study
 
-import com.bread.info.client.controller.Mock
+import com.bread.info.client.controller.MockController
 import com.bread.info.client.controller.StudyController
 import com.bread.info.client.model.StudyCategoryModel
 import javafx.geometry.Insets
@@ -9,7 +9,9 @@ import javafx.scene.layout.Priority
 import tornadofx.*
 
 class StudyMain : View("My study view") {
-    val controller : StudyController by inject()
+//    val controller : StudyController by inject()
+    val controller : MockController by inject()
+
     val selectedCategory = StudyCategoryModel()
 
     override val root = hbox {
