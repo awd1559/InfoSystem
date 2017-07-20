@@ -8,6 +8,7 @@ import { sync } from 'vuex-router-sync'
 import App from './App'
 import StudyTab from './components/study'
 import StudyList from './components/study/list'
+import Study from './components/study/study'
 import NoteTab from './components/note'
 import CodingTab from './components/coding'
 import CompanyTab from './components/company'
@@ -26,6 +27,7 @@ const routes = [
   {path: '/', component: StudyTab},
   {path: '/study', component: StudyTab},
   {path: '/studycategory/:id', name: 'studylist', component: StudyList},
+  {path: '/study/:id', name: 'study', component: Study},
   {path: '/note', component: NoteTab},
   {path: '/coding', component: CodingTab},
   {path: '/company', component: CompanyTab}

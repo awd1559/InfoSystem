@@ -1,7 +1,7 @@
 <template>
   <div>
     <group>
-      <cell v-for="item in items" :key="item.id" :title="item.title" is-link link="/studycategory/item.id"></cell>
+      <cell v-for="item in items" :key="item.id" :title="item.title" :is-link=true :link="{name: 'study', params: {id: item.id}}"></cell>
     </group>
   </div>
 </template>
@@ -23,15 +23,8 @@ export default {
       parentId: ''
     }
   },
-  ready () {
-    console.log('ready function called')
-    this.parentId = this.$route.params.id
-    console.log(this.parentId)
-  },
   created () {
-    console.log('create function called')
     this.parentId = this.$route.params.id
-    console.log(this.parentId)
 
     studyAPI.study.allByCateId(this.parentId, 1, (err, data) => {
       if (err) {

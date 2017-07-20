@@ -22,6 +22,10 @@ class study {
   static allByCateId (categoryId, pageIndex, callback) {
     http.getparams('/study/list', {params: {categoryId: categoryId, page: pageIndex}}, callback)
   }
+
+  static getById (id, callback) {
+    http.getparams('/study/one', {params: {id: id}}, callback)
+  }
 }
 
 export default {

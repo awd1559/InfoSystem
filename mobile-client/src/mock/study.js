@@ -54,6 +54,13 @@ class study {
     var response = {items: data.slice(start, end), pageTotal: total}
     return response
   }
+
+  static getById (url) {
+    var params = url.url.split('?')[1]
+    var id = params.split('&')[0].split('=')[1]
+    var response = {id: id, title: 'the example', content: '## 1'}
+    return response
+  }
 }
 
 export default {
