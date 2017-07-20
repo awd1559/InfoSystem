@@ -27,7 +27,7 @@
     </header>
 
     <div class="window-content" id="mark-content">
-      <mavon-editor v-model="item.description" style="height: 100%;width:100%"
+      <mavon-editor v-model="item.content" style="height: 100%;width:100%"
         :editable="editor.editable"
         :default_open="editor.defaultopen"
         :toolbarsFlag="editor.toolbarsFlag"
@@ -86,7 +86,7 @@
         },
         editing: false,
         dirty: false,
-        item: {id: '', category: {id: '', subject: ''}, title: '', description: ''}
+        item: {id: '', category: {id: '', subject: ''}, title: '', content: ''}
       }
     },
     mounted () {

@@ -15,9 +15,14 @@ import CompanyTab from './components/company'
 import './mock/index.js'
 import Vuex from 'vuex'
 
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
 Vue.use(Vuex)
 
 Vue.use(VueRouter)
+
+Vue.use(mavonEditor)
 
 import vuexI18n from 'vuex-i18n'
 
