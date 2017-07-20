@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import helper from '../../../service/helpers'
+  import api from '../../../service/api/note'
   import ContextMenu from 'vue-context-menu'
   import MainDialog from '../dialogs/MainDialog'
   import ConfirmDialog from '../dialogs/ConfirmDialog'
@@ -95,7 +95,7 @@
         this.notifyIndexChanged(this.selectedId)
       },
       resetUI () {
-        helper.notecategory.all((err, data) => {
+        api.notecategory.all((err, data) => {
           if (err) { console.log(err) }
           this.items = data
           if (this.items.length === 0) {
@@ -128,14 +128,14 @@
           case 'new':
             this.show = false
             var self = this
-            helper.notecategory.add(this.editingItem.item, function (err, response) {
+            api.notecategory.add(this.editingItem.item, function (err, response) {
               if (err) console.log(err)
               self.items.push(response)
             })
             break
           case 'update':
             this.show = false
-            helper.notecategory.update(this.editingItem.item, function (err, response) {
+            api.notecategory.update(this.editingItem.item, function (err, response) {
               if (err) console.log(err)
             })
             break
@@ -143,7 +143,7 @@
             this.showconfirm = false
             var data = this.items
             var current = this.editingItem.item
-            helper.notecategory.remove(this.editingItem.item, function (err, response) {
+            api.notecategory.remove(this.editingItem.item, function (err, response) {
               if (err) console.log(err)
               data.forEach(function (item, i) {
                 if (item === current) {

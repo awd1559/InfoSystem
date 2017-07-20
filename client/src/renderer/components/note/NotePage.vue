@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import helper from '../../../service/helpers'
+  import api from '../../../service/api/note'
 
   export default {
     name: 'note-page',
@@ -94,7 +94,7 @@
     },
     methods: {
       resetUI () {
-        helper.note.oneById(this.$route.params.id, (err, note) => {
+        api.note.oneById(this.$route.params.id, (err, note) => {
           if (err) { console.log(err) }
           this.item = note
         })
@@ -111,7 +111,7 @@
       },
       save () {
         if (this.dirty) {
-          helper.note.update(this.item, (err, data) => {
+          api.note.update(this.item, (err, data) => {
             if (err) { console.log(err) }
             console.log(data)
             this.dirty = false

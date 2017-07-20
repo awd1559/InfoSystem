@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import helper from '../../../service/helpers'
+  import api from '../../../service/api/coding'
 
   export default {
     name: 'coding-page',
@@ -94,7 +94,7 @@
     },
     methods: {
       resetUI () {
-        helper.coding.oneById(this.$route.params.id, (err, coding) => {
+        api.coding.oneById(this.$route.params.id, (err, coding) => {
           if (err) { console.log(err) }
           this.item = coding
         })
@@ -111,7 +111,7 @@
       },
       save () {
         if (this.dirty) {
-          helper.coding.update(this.item, (err, data) => {
+          api.coding.update(this.item, (err, data) => {
             if (err) { console.log(err) }
             console.log(data)
             this.dirty = false

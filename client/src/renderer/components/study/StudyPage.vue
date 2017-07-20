@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import helper from '../../../service/helpers'
+  import api from '../../../service/api/study'
 
   export default {
     name: 'study-page',
@@ -94,7 +94,7 @@
     },
     methods: {
       resetUI () {
-        helper.study.oneById(this.$route.params.id, (err, study) => {
+        api.study.oneById(this.$route.params.id, (err, study) => {
           if (err) { console.log(err) }
           this.item = study
         })
@@ -111,7 +111,7 @@
       },
       save () {
         if (this.dirty) {
-          helper.study.update(this.item, (err, data) => {
+          api.study.update(this.item, (err, data) => {
             if (err) { console.log(err) }
             console.log(data)
             this.dirty = false

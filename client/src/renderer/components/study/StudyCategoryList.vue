@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import helper from '../../../service/helpers'
+  import api from '../../../service/api/study'
   import ContextMenu from 'vue-context-menu'
   import MainDialog from '../dialogs/MainDialog'
   import ConfirmDialog from '../dialogs/ConfirmDialog'
@@ -95,7 +95,7 @@
         this.notifyIndexChanged(this.selectedId)
       },
       resetUI () {
-        helper.studycategory.all((err, data) => {
+        api.studycategory.all((err, data) => {
           if (err) { console.log(err) }
           this.items = data
           if (this.items.length === 0) {
@@ -128,14 +128,14 @@
           case 'new':
             this.show = false
             var self = this
-            helper.studycategory.add(this.editingItem.item, function (err, response) {
+            api.studycategory.add(this.editingItem.item, function (err, response) {
               if (err) console.log(err)
               self.items.push(response)
             })
             break
           case 'update':
             this.show = false
-            helper.studycategory.update(this.editingItem.item, function (err, response) {
+            api.studycategory.update(this.editingItem.item, function (err, response) {
               if (err) console.log(err)
             })
             break
@@ -143,7 +143,7 @@
             this.showconfirm = false
             var data = this.items
             var current = this.editingItem.item
-            helper.studycategory.remove(this.editingItem.item, function (err, response) {
+            api.studycategory.remove(this.editingItem.item, function (err, response) {
               if (err) console.log(err)
               data.forEach(function (item, i) {
                 if (item === current) {

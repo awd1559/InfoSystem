@@ -34,7 +34,7 @@
 
 <script>
   import router from '../../router'
-  import helper from '../../../service/helpers'
+  import api from '../../../service/api/note'
   import Pager from '../Pagination'
 
   export default {
@@ -59,7 +59,7 @@
         this.getDataAtPage(1)
       },
       getDataAtPage (pageIndex) {
-        helper.note.allByCateId(this.parentId, pageIndex, (err, response) => {
+        api.note.allByCateId(this.parentId, pageIndex, (err, response) => {
           if (err) { console.log(err) }
           this.items = response.items
           this.$refs.pager.setup(response.pageTotal)
