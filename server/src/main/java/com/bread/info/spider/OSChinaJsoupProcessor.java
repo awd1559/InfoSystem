@@ -43,14 +43,14 @@ public class OSChinaJsoupProcessor {
                 String items = menu.getJSONObject("menu").getJSONArray("items").toJSONString();
                 List<OSChinaMenu> menus = JSONObject.parseArray(items, OSChinaMenu.class);
                 for (OSChinaMenu item : menus) {
-                    CodingCategory parent = codingCategoryRepository.findByName(item.getName());
+                    CodingCategory parent = codingCategoryRepository.findBySubject(item.getName());
                     if(parent == null) {
                         parent = new CodingCategory(item.getName());
                         codingCategoryRepository.save(parent);
                     }
 
                     for (OSChinaMenu c : item.getChilds()) {
-                        CodingCategory child = codingCategoryRepository.findByNameAAndParent(item.getName(), parent);
+                        CodingCategory child = codingCategoryRepository.findBySubjectAndParent(item.getName(), parent);
                         if(child == null) {
                             child = new CodingCategory(c.getName(), parent);
                             codingCategoryRepository.save(child);
