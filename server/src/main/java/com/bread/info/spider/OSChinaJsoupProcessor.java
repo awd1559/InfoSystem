@@ -49,6 +49,7 @@ public class OSChinaJsoupProcessor {
                 JSONObject menu = JSONObject.parseObject(menustring);
                 String items = menu.getJSONObject("menu").getJSONArray("items").toJSONString();
                 List<OSChinaMenu> menus = JSONObject.parseArray(items, OSChinaMenu.class);
+                menus.remove(0);
                 for (OSChinaMenu item : menus) {
                     CodingCategory parent = null;
                     List<CodingCategory> parentlist = codingCategoryRepository.findBySubject(item.getName());
@@ -87,6 +88,11 @@ public class OSChinaJsoupProcessor {
     }
     private void processItem(CodingCategory category, String url) {
         System.out.println("get : " + url);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Document doc = null;
         try {
             doc = Jsoup.connect(url).get();
@@ -206,6 +212,12 @@ public class OSChinaJsoupProcessor {
     }
 
     private void processMenuItem(List<String> item_urls, String url, String pageurl) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Document doc = null;
         try {
             doc = Jsoup.connect(url + pageurl).get();
