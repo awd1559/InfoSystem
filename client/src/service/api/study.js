@@ -1,30 +1,35 @@
+import config from '../config'
 import http from './http'
 
 class studycategory {
   static all (callback) {
-    http.get('/studycategory/all', callback)
+    http.get(config.studycategory.all, callback)
   }
 
   static add (item, callback) {
-    http.post('/studycategory/add', item, callback)
+    http.post(config.studycategory.add, item, callback)
   }
 
   static update (item, callback) {
-    http.post('/studycategory/update', item, callback)
+    http.post(config.studycategory.update, item, callback)
   }
 
   static remove (item, callback) {
-    http.getparams('/studycategory/delete', {params: {id: item.id}}, callback)
+    http.getparams(config.studycategory.delete, {params: {id: item.id}}, callback)
   }
 }
 
 class study {
   static allByCateId (categoryId, pageIndex, callback) {
-    http.getparams('/study/list', {params: {categoryId: categoryId, page: pageIndex}}, callback)
+    http.getparams(config.study.list, {params: {categoryId: categoryId, page: pageIndex}}, callback)
   }
 
-  static getById (id, callback) {
-    http.getparams('/study/one', {params: {id: id}}, callback)
+  static oneById (id, callback) {
+    http.getparams(config.study.one, {params: {id: id}}, callback)
+  }
+
+  static update (item, callback) {
+    http.post(config.study.update, item, callback)
   }
 }
 

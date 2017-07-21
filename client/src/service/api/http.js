@@ -1,11 +1,8 @@
-import config from '../config'
 const axios = require('axios')
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
-// const BASE_URL = 'http://localhost:8080'
-
 function get (url, callback) {
-  axios.get(config.getBaseUrl() + url)
+  axios.get(url)
   .then(function (response) {
     callback(null, response.data)
   })
@@ -15,7 +12,7 @@ function get (url, callback) {
 }
 
 function getparams (url, params, callback) {
-  axios.get(config.getBaseUrl() + url, params)
+  axios.get(url, params)
   .then(function (response) {
     callback(null, response.data)
   })
@@ -25,7 +22,7 @@ function getparams (url, params, callback) {
 }
 
 function post (url, data, callback) {
-  axios.post(config.getBaseUrl() + url, JSON.stringify(data))
+  axios.post(url, JSON.stringify(data))
   .then(function (response) {
     callback(null, response.data)
   })

@@ -37,7 +37,6 @@ public class Coding {
     private String tag;
 
     //Html or md
-    @NotNull
     private String description;
 
     private String language;

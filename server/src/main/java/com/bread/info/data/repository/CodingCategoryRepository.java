@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CodingCategoryRepository extends JpaRepository<CodingCategory, String> {
     List<CodingCategory> findByParentNull();
-    CodingCategory findBySubject(String name);
-    CodingCategory findBySubjectAndParent(String subject, CodingCategory parent);
+    List<CodingCategory> findBySubject(String name);
+    List<CodingCategory> findBySubjectAndParent(String subject, CodingCategory parent);
 }

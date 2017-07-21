@@ -27,8 +27,15 @@ public class OSChinaJsoupProcessor {
         this.codingCategoryRepository = codingCategoryRepository;
     }
 
-    public void run() throws IOException {
-        Document doc = Jsoup.connect(BASE_URL + "/project").get();
+    public void run() {
+
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(BASE_URL + "/project").get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
         Elements tags = doc.getElementsByTag("project-sort");
         for (Element e : tags) {
             String content = e.toString();
@@ -43,23 +50,33 @@ public class OSChinaJsoupProcessor {
                 String items = menu.getJSONObject("menu").getJSONArray("items").toJSONString();
                 List<OSChinaMenu> menus = JSONObject.parseArray(items, OSChinaMenu.class);
                 for (OSChinaMenu item : menus) {
-                    CodingCategory parent = codingCategoryRepository.findBySubject(item.getName());
-                    if(parent == null) {
+                    CodingCategory parent = null;
+                    List<CodingCategory> parentlist = codingCategoryRepository.findBySubject(item.getName());
+                    if(parentlist == null || parentlist.size() == 0) {
                         parent = new CodingCategory(item.getName());
                         codingCategoryRepository.save(parent);
+                    } else {
+                        parent = parentlist.get(0);
                     }
 
                     for (OSChinaMenu c : item.getChilds()) {
-                        CodingCategory child = codingCategoryRepository.findBySubjectAndParent(item.getName(), parent);
-                        if(child == null) {
+                        List<CodingCategory> result = codingCategoryRepository.findBySubjectAndParent(c.getName(), parent);
+                        CodingCategory child = null;
+                        if(result == null || result.size() == 0) {
                             child = new CodingCategory(c.getName(), parent);
                             codingCategoryRepository.save(child);
+                        } else {
+                            child = result.get(0);
                         }
 
                         List<String> item_urls = new ArrayList<>();
+                        System.out.println("scan page: " + BASE_URL + c.getHref());
                         processMenuItem(item_urls, BASE_URL + c.getHref(), "");
+                        System.out.println("get " + c.getName() +" count: " + item_urls.size());
 
                         for(String item_url : item_urls) {
+                            List<Coding> result1 = codingRepository.findByHomelink(item_url);
+                            if(result1 != null && result1.size() > 0) continue;
                             processItem(child, item_url);
                         }
                     }
@@ -68,18 +85,27 @@ public class OSChinaJsoupProcessor {
             }
         }
     }
-    private void processItem(CodingCategory category, String url) throws IOException {
-        Document doc = Jsoup.connect(url).get();
-
+    private void processItem(CodingCategory category, String url) {
+        System.out.println("get : " + url);
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
         Elements name = doc.select("span.project-name");
 
-        Coding coding = codingRepository.findByNameAndCategory(name.text(), category);
+        Coding coding = null;
+        List<Coding> result = codingRepository.findByNameAndCategory(name.text(), category);
 
-        if(coding == null) {
+        if(result == null || result.size() == 0) {
             coding = new Coding();
             coding.setName(name.text());
             coding.setCategory(category);
+        } else {
+            return;
         }
 
         coding.setTag("");
@@ -97,28 +123,37 @@ public class OSChinaJsoupProcessor {
         coding.setAuthor("");
 
         //Links
-        Elements links = doc.select("div.urls > a");
-        if(links.size() > 0) {
-            String homelink = links.get(0).attr("href").substring(45);
-            coding.setHomelink(URLDecoder.decode(homelink, "gb2312"));
-        }
+        try {
+            Elements links = doc.select("div.urls > a");
+            if(links.size() > 0) {
+                String homelink = links.get(0).attr("href").substring(45);
+                coding.setHomelink(URLDecoder.decode(homelink, "gb2312"));
+            }
 
-        if(links.size() > 1) {
-            String doclink = links.get(1).attr("href").substring(45);
-            coding.setDoclink(URLDecoder.decode(doclink, "gb2312"));
+            if(links.size() > 1) {
+                String doclink = links.get(1).attr("href").substring(45);
+                coding.setDoclink(URLDecoder.decode(doclink, "gb2312"));
+            }
+            if(links.size() > 2) {
+                String sourcelink = links.get(2).attr("href").substring(45);
+                coding.setSourcelink(URLDecoder.decode(sourcelink, "gb2312"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if(links.size() > 2) {
-            String sourcelink = links.get(2).attr("href").substring(45);
-            coding.setSourcelink(URLDecoder.decode(sourcelink, "gb2312"));
-        }
-
 
         //oschina最后更新
 //        coding.setOsLastUpdate(1.0d);
         //oschina评分
         Elements rank = doc.select("div[class=box-aw vertical box]").select("span.number");
         if(rank.size() > 0) {
-            coding.setOsRankCount(Float.valueOf(rank.text()));
+            Float floatrank = 0.0f;
+            try {
+                floatrank = Float.valueOf(rank.text());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            coding.setOsRankCount(floatrank);
         } else {
             coding.setOsRankCount(0.0f);
         }
@@ -126,13 +161,25 @@ public class OSChinaJsoupProcessor {
         //oschina收藏数
         Elements fav = doc.select("div.collect-num").select("span.num");
         if(fav.size() > 0) {
-            coding.setOsFavCount(Integer.valueOf(fav.text()));
+            int intfav = 0;
+            try {
+                intfav = Integer.valueOf(fav.text());
+            }catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            coding.setOsFavCount(intfav);
         }
 
         //oschina评论数
         Elements comment = doc.select("div#v-comment").select("header[class=panel-heading box]").select("span[class=title box-aw] > a > span");
         if(comment.size() > 0) {
-            coding.setOsCommentCount(Integer.valueOf(comment.text()));
+            int intcomment = 0;
+            try {
+                intcomment = Integer.valueOf(comment.text());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            coding.setOsCommentCount(intcomment);
         } else {
             coding.setOsCommentCount(0);
         }
@@ -141,8 +188,16 @@ public class OSChinaJsoupProcessor {
         //Git
         Elements repo = doc.select("div.github-stats > a");
         if(repo.size() > 2) {
-            coding.setGitStar(Integer.valueOf(repo.get(1).text()));
-            coding.setGitFork(Integer.valueOf(repo.get(2).text()));
+            int intstar = 0;
+            int intfork = 0;
+            try {
+                intstar = Integer.valueOf(repo.get(1).text());
+                intfork = Integer.valueOf(repo.get(2).text());
+            } catch(NumberFormatException e) {
+                e.printStackTrace();
+            }
+            coding.setGitStar(intstar);
+            coding.setGitFork(intfork);
         }
         //最后更新时间
 //        coding.setGitLastUpdate();
@@ -150,9 +205,14 @@ public class OSChinaJsoupProcessor {
         codingRepository.save(coding);
     }
 
-    private void processMenuItem(List<String> item_urls, String url, String pageurl) throws IOException {
-//        System.out.println("get : " + url + pageurl);
-        Document doc = Jsoup.connect(url + pageurl).get();
+    private void processMenuItem(List<String> item_urls, String url, String pageurl) {
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(url + pageurl).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
         Elements current_page_items = doc.select("div[class=lists news-list]").select("div[class=box item]").select("div.box-aw > a");
         for (Element e : current_page_items) {
             item_urls.add(e.attr("href"));

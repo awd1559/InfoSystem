@@ -30,11 +30,7 @@ public class SpiderController {
     public void startScanOSChina() {
         OSChinaJsoupProcessor processor = new OSChinaJsoupProcessor(codingRepository, codingCategoryRepository);
 
-        try {
-            processor.run();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        processor.run();
     }
 }
 

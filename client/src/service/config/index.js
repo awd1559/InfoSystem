@@ -19,6 +19,51 @@ function getBaseUrl () {
   return url
 }
 
+class studycategory {
+  static all = getBaseUrl() + '/studycategory/all'
+  static add = getBaseUrl() + '/studycategory/add'
+  static update = getBaseUrl() + '/studycategory/update'
+  static delete = getBaseUrl() + '/studycategory/delete'
+}
+
+class study {
+  static list = getBaseUrl() + '/study/list'
+  static one = getBaseUrl() + '/study/one'
+  static update = getBaseUrl() + '/study/update'
+}
+
+class notecategory {
+  static list = getBaseUrl() + '/notecategory/list'
+  static add = getBaseUrl() + '/notecategory/add'
+  static update = getBaseUrl() + '/notecategory/update'
+  static delete = getBaseUrl() + '/notecategory/delete'
+}
+
+class note {
+  static list = getBaseUrl() + '/note/list'
+  static one = getBaseUrl() + '/note/one'
+  static update = getBaseUrl() + '/note/update'
+}
+
+class codingcategory {
+  static list = getBaseUrl() + '/codingcategory/list'
+  static add = getBaseUrl() + '/codingcategory/add'
+  static update = getBaseUrl() + '/codingcategory/update'
+  static delete = getBaseUrl() + '/codingcategory/delete'
+}
+
+class coding {
+  static list = getBaseUrl() + '/codingcategory/list'
+  static add = getBaseUrl() + '/codingcategory/add'
+  static update = getBaseUrl() + '/codingcategory/update'
+  static delete = getBaseUrl() + '/codingcategory/delete'
+}
+
 export default {
-  getBaseUrl
+  studycategory,
+  study,
+  notecategory,
+  note,
+  codingcategory,
+  coding
 }

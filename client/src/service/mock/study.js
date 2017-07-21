@@ -55,10 +55,16 @@ class study {
     return response
   }
 
-  static getById (url) {
-    var params = url.url.split('?')[1]
+  static getById (req) {
+    var params = req.url.split('?')[1]
     var id = params.split('&')[0].split('=')[1]
     var response = {id: id, title: 'the example', content: '## 1'}
+    return response
+  }
+
+  static update (req) {
+    console.log(req)
+    var response = {id: 1, title: 'the example', content: '## 1'}
     return response
   }
 }
