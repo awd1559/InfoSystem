@@ -49,7 +49,22 @@ public class OSChinaJsoupProcessor {
                 JSONObject menu = JSONObject.parseObject(menustring);
                 String items = menu.getJSONObject("menu").getJSONArray("items").toJSONString();
                 List<OSChinaMenu> menus = JSONObject.parseArray(items, OSChinaMenu.class);
-                menus.remove(0);
+                menus.remove(0); // 编程语言
+                menus.remove(0); // web应用开发
+                menus.remove(0); // 手机／移动开发
+                menus.remove(0); // iOS代码库
+                menus.remove(0); // 程序开发
+                menus.remove(0); // 开发工具
+                menus.remove(0); // jQuery
+                menus.remove(0); // 建站系统
+                menus.remove(0); // 企业应用
+                menus.remove(0); // 服务器软件
+//                menus.remove(0); // 数据库相关
+//                menus.remove(0); // 应用工具
+//                menus.remove(0); // 插件
+//                menus.remove(0); // 游戏
+//                menus.remove(0); // 管理
+//                menus.remove(0); // 其它
                 for (OSChinaMenu item : menus) {
                     CodingCategory parent = null;
                     List<CodingCategory> parentlist = codingCategoryRepository.findBySubject(item.getName());
